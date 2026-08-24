@@ -1,0 +1,37 @@
+general:
+  no-permission: "<red>You do not have permission.</red>"
+  players-only: "<red>Players only.</red>"
+  player-not-found: "<red>Player not found.</red>"
+  feature-disabled: "<red>That feature is disabled.</red>"
+  invalid-number: "<red>That value must be a number.</red>"
+moderation:
+  warning-removed: "<green>Warning #%id% removed.</green>"
+  warning-not-found: "<red>Active warning #%id% was not found.</red>"
+  punishment-pardoned: "<green>Punishment #%id% pardoned.</green>"
+  report-claimed: "<green>Report #%id% claimed.</green>"
+  report-closed: "<green>Report #%id% closed.</green>"
+cases:
+  created: "<green>Case #%id% created for %player%.</green>"
+  claimed: "<green>Case #%id% claimed.</green>"
+  closed: "<green>Case #%id% closed.</green>"
+  reopened: "<green>Case #%id% reopened.</green>"
+bounties:
+  created: "<green>Bounty #%id% placed on %player%.</green>"
+  claimed: "<gold>%killer%</gold> <gray>claimed a bounty on</gray> <yellow>%target%</yellow><gray>.</gray>"
+quests:
+  completed: "<green>Quest complete:</green> <yellow>%quest%</yellow>"
+  claimed: "<green>Quest reward claimed.</green>"
+achievements:
+  unlocked: "<gold><bold>Achievement unlocked:</bold></gold> <yellow>%achievement%</yellow>"
+onboarding:
+  welcome: "<gold><bold>Welcome to the SMP, %player%.</bold></gold>"
+  accept-rules: "<yellow>Read /rules and use /rulesaccept to continue.</yellow>"
+seasons:
+  started: "<gold><bold>%season%</bold></gold> <green>has started.</green>"
+  ended: "<gray>The current season has ended.</gray>"
+rollback:
+  success: "<green>Rolled back action #%id%.</green>"
+  unavailable: "<red>That action cannot be rolled back.</red>"
+webapi:
+  started: "<green>Web API started on %address%.</green>"
+  stopped: "<gray>Web API stopped.</gray>"
