@@ -5,14 +5,17 @@ import io.github.xtx.smptoolkit.core.Text;
 import org.bukkit.GameRules;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.*;
 
@@ -40,7 +43,7 @@ public final class WorldProfileService implements Listener {
     @EventHandler(priority=EventPriority.HIGHEST,ignoreCancelled=true)
     public void onPvp(EntityDamageByEntityEvent event){
         if(!plugin.featureEnabled("world-profiles")||!(event.getEntity() instanceof Player victim))return;
-        Player attacker=event.getDamager() instanceof Player p?p:null;if(attacker==null)return;
+        Player attacker=playerDamager(event.getDamager());if(attacker==null)return;
         if(!enabled(victim.getWorld(),"pvp",true)){event.setCancelled(true);attacker.sendMessage(Text.mm("<red>PvP is disabled in this world.</red>"));}
     }
 
@@ -52,11 +55,7 @@ public final class WorldProfileService implements Listener {
         if(key!=null&&!enabled(event.getPlayer().getWorld(),key,true)){event.setCancelled(true);event.getPlayer().sendMessage(Text.mm("<red>That feature is disabled in this world.</red>"));}
     }
 
-    @EventHandler
-    public void onWorldChange(PlayerChangedWorldEvent event){applyWorldRules(event.getPlayer().getWorld());}
-
-    public void applyWorldRules(World world){
-        ConfigurationSection worlds=plugin.getConfig().getConfigurationSection("platform.world-profiles.worlds");if(worlds==null)return;ConfigurationSection exact=worlds.getConfigurationSection(world.getName());if(exact==null)return;
-        if(exact.contains("locator-bar"))world.setGameRule(GameRules.LOCATOR_BAR,exact.getBoolean("locator-bar"));
-    }
+    @EventHandler public void onWorldChange(PlayerChangedWorldEvent event){applyWorldRules(event.getPlayer().getWorld());}
+    public void applyWorldRules(World world){ConfigurationSection worlds=plugin.getConfig().getConfigurationSection("platform.world-profiles.worlds");if(worlds==null)return;ConfigurationSection exact=worlds.getConfigurationSection(world.getName());if(exact==null)return;if(exact.contains("locator-bar"))world.setGameRule(GameRules.LOCATOR_BAR,exact.getBoolean("locator-bar"));}
+    private Player playerDamager(Entity entity){if(entity instanceof Player p)return p;if(entity instanceof Projectile projectile){ProjectileSource source=projectile.getShooter();if(source instanceof Player p)return p;}return null;}
 }
