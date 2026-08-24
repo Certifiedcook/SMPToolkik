@@ -19,6 +19,7 @@ public final class PlatformModule implements Module {
     private UndoService undo;
     private CasesService cases;
     private ModerationGuiService moderation;
+    private ModerationBridgeService moderationBridge;
     private ProgressionService progression;
     private BountyService bounties;
     private SchedulerService scheduler;
@@ -40,6 +41,7 @@ public final class PlatformModule implements Module {
         undo=new UndoService(plugin,database);
         cases=new CasesService(plugin,database,undo);
         moderation=new ModerationGuiService(plugin,database,undo);
+        moderationBridge=new ModerationBridgeService(plugin,moderation);
         progression=new ProgressionService(plugin,database);
         bounties=new BountyService(plugin,database);
         scheduler=new SchedulerService(plugin,database);
@@ -51,15 +53,12 @@ public final class PlatformModule implements Module {
         webApi=new WebApiService(plugin);
         permissions=new PermissionPresetService(plugin);
         adminGui=new AdminGuiService(plugin,database,moderation,cases,undo);
-        register(cases);register(moderation);register(progression);register(bounties);register(worlds);register(staffActivity);register(seasons);register(pvp);register(onboarding);register(adminGui);
+        register(cases);register(moderation);register(moderationBridge);register(progression);register(bounties);register(worlds);register(staffActivity);register(seasons);register(pvp);register(onboarding);register(adminGui);
         progression.enable();scheduler.enable();seasons.enable();webApi.enable();
         api=new SMPToolkitAPIImpl(plugin);Bukkit.getServicesManager().register(SMPToolkitAPI.class,api,plugin,ServicePriority.Normal);
     }
 
-    @Override public void disable(){
-        if(webApi!=null)webApi.disable();if(seasons!=null)seasons.disable();if(scheduler!=null)scheduler.disable();if(progression!=null)progression.disable();Bukkit.getServicesManager().unregisterAll(plugin);if(database!=null)database.close();
-    }
-
+    @Override public void disable(){if(webApi!=null)webApi.disable();if(seasons!=null)seasons.disable();if(scheduler!=null)scheduler.disable();if(progression!=null)progression.disable();Bukkit.getServicesManager().unregisterAll(plugin);if(database!=null)database.close();}
     private void register(Listener listener){Bukkit.getPluginManager().registerEvents(listener,plugin);}
 
     public boolean handle(CommandSender sender,String label,String[] args){
@@ -70,7 +69,7 @@ public final class PlatformModule implements Module {
         if(progression.handle(sender,l,args))return true;
         if(bounties.handle(sender,l,args))return true;
         switch(l){
-            case "scheduler"-> {return scheduler.handle(sender,args);}
+            case "scheduler"->{return scheduler.handle(sender,args);}
             case "worldprofile"->{return worlds.handle(sender,args);}
             case "staffstats"->{return staffActivity.handle(sender,args);}
             case "rollback"->{return undo.handle(sender,args);}
