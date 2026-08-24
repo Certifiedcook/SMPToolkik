@@ -33,7 +33,13 @@ public final class OnboardingService implements Listener {
             int delay=Math.max(1,plugin.getConfig().getInt("platform.onboarding.delay-ticks",40));
             Bukkit.getScheduler().runTaskLater(plugin,()->welcome(player),delay);
         }
-        if(plugin.getConfig().getBoolean("platform.onboarding.require-rules-accept",false))db.rulesAccepted(player.getUniqueId()).thenAccept(ok->{if(!ok){pending.add(player.getUniqueId());if(plugin.getConfig().getBoolean("platform.onboarding.gui-enabled",true))plugin.sync(()->openGui(player));}});
+        if(plugin.getConfig().getBoolean("platform.onboarding.require-rules-accept",false)){
+            db.rulesAccepted(player.getUniqueId()).thenAccept(ok->{
+                if(ok){pending.remove(player.getUniqueId());return;}
+                pending.add(player.getUniqueId());
+                if(plugin.getConfig().getBoolean("platform.onboarding.gui-enabled",true))plugin.sync(()->{if(player.isOnline()&&pending.contains(player.getUniqueId()))openGui(player);});
+            });
+        }
     }
 
     @EventHandler(priority=EventPriority.HIGHEST,ignoreCancelled=true)
@@ -49,19 +55,29 @@ public final class OnboardingService implements Listener {
         if(!(event.getWhoClicked() instanceof Player player)||!Text.plain(event.getView().title()).equalsIgnoreCase("SMP Welcome"))return;
         event.setCancelled(true);
         if(event.getRawSlot()==11){player.closeInventory();Bukkit.dispatchCommand(player,"rules");}
-        if(event.getRawSlot()==15){accept(player);player.closeInventory();}
+        else if(event.getRawSlot()==15){accept(player);player.closeInventory();}
     }
 
     public boolean handle(CommandSender sender,String label,String[] args){
         if(label.equals("rulesaccept")){if(sender instanceof Player p)accept(p);else sender.sendMessage("Players only.");return true;}
         if(!label.equals("onboarding"))return false;
         if(args.length<2||!args[0].equalsIgnoreCase("reset")){sender.sendMessage(Text.mm("<red>/onboarding reset <player></red>"));return true;}
-        Player target=Bukkit.getPlayerExact(args[1]);if(target==null){sender.sendMessage(Text.mm("<red>Player must be online.</red>"));return true;}db.setRulesAccepted(target.getUniqueId(),false);pending.add(target.getUniqueId());sender.sendMessage(Text.mm("<green>Reset onboarding for "+Text.escapeMini(target.getName())+".</green>"));return true;
+        Player target=Bukkit.getPlayerExact(args[1]);if(target==null){sender.sendMessage(Text.mm("<red>Player must be online.</red>"));return true;}
+        db.setRulesAccepted(target.getUniqueId(),false).thenRun(()->plugin.sync(()->{pending.add(target.getUniqueId());sender.sendMessage(Text.mm("<green>Reset onboarding for "+Text.escapeMini(target.getName())+".</green>"));if(plugin.getConfig().getBoolean("platform.onboarding.gui-enabled",true))openGui(target);}));return true;
     }
 
     private void welcome(Player player){
-        if(!player.isOnline())return;plugin.messages().send(player,"onboarding.welcome","player",player.getName());for(String line:plugin.getConfig().getStringList("platform.onboarding.messages"))player.sendMessage(Text.mm(line.replace("%player%",Text.escapeMini(player.getName()))));for(String command:plugin.getConfig().getStringList("platform.onboarding.starter-commands"))Bukkit.dispatchCommand(Bukkit.getConsoleSender(),command.replace("%player%",player.getName()));if(plugin.getConfig().getBoolean("platform.onboarding.require-rules-accept",false)){plugin.messages().send(player,"onboarding.accept-rules");if(plugin.getConfig().getBoolean("platform.onboarding.gui-enabled",true))openGui(player);}}
-    private void accept(Player player){if(!pending.remove(player.getUniqueId())&&plugin.getConfig().getBoolean("platform.onboarding.require-rules-accept",false)){db.rulesAccepted(player.getUniqueId()).thenAccept(ok->{if(ok)plugin.sync(()->player.sendMessage(Text.mm("<gray>You already accepted the rules.</gray>")));});return;}db.setRulesAccepted(player.getUniqueId(),true);player.sendMessage(Text.mm("<green>Rules accepted. Welcome.</green>"));}
+        if(!player.isOnline())return;
+        plugin.messages().send(player,"onboarding.welcome","player",player.getName());
+        for(String line:plugin.getConfig().getStringList("platform.onboarding.messages"))player.sendMessage(Text.mm(line.replace("%player%",Text.escapeMini(player.getName()))));
+        for(String command:plugin.getConfig().getStringList("platform.onboarding.starter-commands"))Bukkit.dispatchCommand(Bukkit.getConsoleSender(),command.replace("%player%",player.getName()));
+        if(plugin.getConfig().getBoolean("platform.onboarding.require-rules-accept",false)){plugin.messages().send(player,"onboarding.accept-rules");if(plugin.getConfig().getBoolean("platform.onboarding.gui-enabled",true)&&pending.contains(player.getUniqueId()))openGui(player);}
+    }
+
+    private void accept(Player player){
+        db.setRulesAccepted(player.getUniqueId(),true).thenRun(()->plugin.sync(()->{pending.remove(player.getUniqueId());player.sendMessage(Text.mm("<green>Rules accepted. Welcome.</green>"));}));
+    }
+
     private void openGui(Player player){Inventory inv=Bukkit.createInventory(null,27,Text.mm("<gold>SMP Welcome</gold>"));inv.setItem(11,item(Material.WRITABLE_BOOK,"<yellow>View Rules</yellow>"));inv.setItem(15,item(Material.LIME_WOOL,"<green>Accept Rules</green>"));player.openInventory(inv);}
     private ItemStack item(Material material,String name){ItemStack stack=new ItemStack(material);ItemMeta meta=stack.getItemMeta();meta.displayName(Text.mm(name));stack.setItemMeta(meta);return stack;}
 }
