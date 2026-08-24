@@ -58,7 +58,7 @@ public final class AdminGuiService implements Listener {
         List<String> ids=new ArrayList<>();int slot=0;
         for(Player target:Bukkit.getOnlinePlayers()){
             if(slot>=45)break;ids.add(target.getUniqueId().toString());
-            ItemStack head=new ItemStack(Material.PLAYER_HEAD);SkullMeta meta=(SkullMeta)head.getItemMeta();meta.setOwningPlayer(target);meta.displayName(Text.mm("<yellow>"+Text.escapeMini(target.getName())+"</yellow>"));meta.lore(List.of(Text.mm("<gray>Click to open profile</gray>")));head.setItemMeta(meta);inv.setItem(slot++,head);
+            ItemStack head=new ItemStack(Material.PLAYER_HEAD);SkullMeta meta=(SkullMeta)head.getItemMeta();meta.setOwningPlayer(target);meta.displayName(Text.mm("<yellow>"+Text.escapeMini(target.getName())+"</yellow>"));meta.lore(List.of(Text.mm("<gray>Click to open profile</gray>")));head.setItemMeta(meta);inv.setItem(slot++,head;
         }
         inv.setItem(49,item(Material.ARROW,"<yellow>Back</yellow>"));contexts.put(player.getUniqueId(),new Context(Type.PLAYERS,null,null,0,ids));player.openInventory(inv);
     }
@@ -73,7 +73,7 @@ public final class AdminGuiService implements Listener {
             inv.setItem(19,item(Material.WRITABLE_BOOK,"<yellow>Warnings: "+warnings+"</yellow>","<gray>Click to open warnings</gray>"));
             inv.setItem(21,item(Material.BOOK,"<aqua>Notes: "+notes.join().size()+"</aqua>","<gray>Click to open notes</gray>"));
             inv.setItem(23,item(Material.PAPER,"<red>Open Reports: "+reports.join()+"</red>","<gray>Click to open report queue</gray>"));
-            inv.setItem(25,item(Material.CHAIN,"<light_purple>Possible Alts: "+alts.join().size()+"</light_purple>","<gray>Click to run alt check</gray>"));
+            inv.setItem(25,item(Material.LEAD,"<light_purple>Possible Alts: "+alts.join().size()+"</light_purple>","<gray>Click to run alt check</gray>"));
             inv.setItem(29,item(Material.IRON_SWORD,"<red>Punishments: "+activePun+" active</red>","<gray>Click for punishment history</gray>"));
             inv.setItem(31,item(Material.CHEST,"<yellow>Homes: "+homes.join().size()+"</yellow>","<gray>Stored home count</gray>"));
             inv.setItem(33,item(Material.ENDER_CHEST,"<light_purple>Inventory</light_purple>","<gray>Click to inspect</gray>"));
