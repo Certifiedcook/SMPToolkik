@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/xsd/maven-4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.github.xtx</groupId>
   <artifactId>smptoolkit</artifactId>
-  <version>0.1</version>
+  <version>0.2</version>
   <name>SMPToolkit</name>
   <description>Modular all-in-one SMP administration and gameplay plugin for Paper 26.2.</description>
 
@@ -16,68 +16,22 @@
   </properties>
 
   <repositories>
-    <repository>
-      <id>papermc</id>
-      <url>https://repo.papermc.io/repository/maven-public/</url>
-    </repository>
-    <repository>
-      <id>placeholderapi</id>
-      <url>https://repo.helpch.at/releases/</url>
-    </repository>
+    <repository><id>papermc</id><url>https://repo.papermc.io/repository/maven-public/</url></repository>
+    <repository><id>placeholderapi</id><url>https://repo.helpch.at/releases/</url></repository>
   </repositories>
 
   <dependencies>
-    <dependency>
-      <groupId>io.papermc.paper</groupId>
-      <artifactId>paper-api</artifactId>
-      <version>26.2.build.112-stable</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.luckperms</groupId>
-      <artifactId>api</artifactId>
-      <version>5.5</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>me.clip</groupId>
-      <artifactId>placeholderapi</artifactId>
-      <version>2.12.3</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.xerial</groupId>
-      <artifactId>sqlite-jdbc</artifactId>
-      <version>3.53.2.1</version>
-      <scope>provided</scope>
-    </dependency>
+    <dependency><groupId>io.papermc.paper</groupId><artifactId>paper-api</artifactId><version>26.2.build.112-stable</version><scope>provided</scope></dependency>
+    <dependency><groupId>net.luckperms</groupId><artifactId>api</artifactId><version>5.5</version><scope>provided</scope></dependency>
+    <dependency><groupId>me.clip</groupId><artifactId>placeholderapi</artifactId><version>2.12.3</version><scope>provided</scope></dependency>
+    <dependency><groupId>org.xerial</groupId><artifactId>sqlite-jdbc</artifactId><version>3.53.2.1</version><scope>provided</scope></dependency>
   </dependencies>
 
   <build>
     <finalName>SMPToolkit-${project.version}</finalName>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.14.0</version>
-        <configuration>
-          <release>25</release>
-          <parameters>true</parameters>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.4.2</version>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Implementation-Title>SMPToolkit</Implementation-Title>
-              <Implementation-Version>${project.version}</Implementation-Version>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
+      <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.14.0</version><configuration><release>25</release><parameters>true</parameters></configuration></plugin>
+      <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-jar-plugin</artifactId><version>3.4.2</version><configuration><archive><manifestEntries><Implementation-Title>SMPToolkit</Implementation-Title><Implementation-Version>${project.version}</Implementation-Version></manifestEntries></archive></configuration></plugin>
     </plugins>
   </build>
 </project>

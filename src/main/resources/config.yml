@@ -11,6 +11,133 @@ modules:
   events: true
   announcements: true
   integrations: true
+  platform: true
+
+features:
+  systems:
+    admin-gui: true
+    cases: true
+    rollback: true
+    progression: true
+    bounties: true
+    scheduler: true
+    world-profiles: true
+    staff-activity: true
+    seasons: true
+    pvp-expansion: true
+    onboarding: true
+    web-api: true
+    freeze: true
+    vanish: true
+    chat: true
+    chat-games: true
+    statistics: true
+    locator: true
+    combat-tag: true
+    new-player-protection: true
+    supply-drops: true
+    manhunt: true
+    announcements: true
+  commands:
+    smp: true
+    smpgui: true
+    configgui: true
+    profilegui: true
+    smpapi: true
+    help: true
+    smphelp: true
+    staff: true
+    staffchat: true
+    staffgui: true
+    freeze: true
+    unfreeze: true
+    vanish: true
+    invsee: true
+    endersee: true
+    heal: true
+    feed: true
+    fly: true
+    god: true
+    speed: true
+    tpo: true
+    tpohere: true
+    playerinfo: true
+    maintenance: true
+    restart: true
+    staffstats: true
+    kick: true
+    warn: true
+    removewarn: true
+    warnings: true
+    mute: true
+    tempmute: true
+    unmute: true
+    ban: true
+    tempban: true
+    unban: true
+    pardon: true
+    punish: true
+    history: true
+    note: true
+    notes: true
+    report: true
+    reports: true
+    altcheck: true
+    case: true
+    cases: true
+    rollback: true
+    chat: true
+    channel: true
+    chatspy: true
+    socialspy: true
+    ignore: true
+    msg: true
+    reply: true
+    chatgames: true
+    stats: true
+    topkills: true
+    topdeaths: true
+    topkd: true
+    topplaytime: true
+    pvpstats: true
+    season: true
+    quests: true
+    quest: true
+    achievements: true
+    bounty: true
+    bounties: true
+    locator: true
+    tpa: true
+    tpaccept: true
+    tpdeny: true
+    tptoggle: true
+    sethome: true
+    home: true
+    delhome: true
+    homes: true
+    setspawn: true
+    spawn: true
+    back: true
+    seen: true
+    realname: true
+    afk: true
+    rtp: true
+    voteskipnight: true
+    streak: true
+    profile: true
+    coinflip: true
+    manhunt: true
+    signup: true
+    event: true
+    announce: true
+    scheduler: true
+    worldprofile: true
+    webapi: true
+    smpermissions: true
+    onboarding: true
+    rulesaccept: true
+    discord: true
+    rules: true
 
 database:
   file: data.db
@@ -22,11 +149,7 @@ discord:
     log-console: true
     log-op-players: true
     permission: smp.staff.commandlog
-    redact-prefixes:
-      - "/login"
-      - "/register"
-      - "/changepassword"
-      - "/2fa"
+    redact-prefixes: ["/login", "/register", "/changepassword", "/2fa"]
   minecraft-chat-log:
     enabled: false
     webhook-url: ""
@@ -50,11 +173,47 @@ staff:
     hide-join-leave: true
 
 chat:
+  default-channel: global
   format: "<dark_gray>[<channel>]</dark_gray> <prefix><white><name></white><suffix><gray>: </gray><message>"
-  local-radius: 100
-  default-channel: GLOBAL
   slowmode-seconds: 0
-  globally-muted: false
+  mentions:
+    enabled: true
+  channels:
+    global:
+      enabled: true
+      display: Global
+      radius: -1
+      permission: ""
+      muted: false
+      slowmode-seconds: 0
+      discord-log: true
+      format: "<dark_gray>[<channel>]</dark_gray> <prefix><white><name></white><suffix><gray>: </gray><message>"
+    local:
+      enabled: true
+      display: Local
+      radius: 100
+      permission: ""
+      muted: false
+      slowmode-seconds: 0
+      discord-log: true
+      format: "<dark_gray>[<channel>]</dark_gray> <prefix><white><name></white><suffix><gray>: </gray><message>"
+    trade:
+      enabled: true
+      display: Trade
+      radius: -1
+      permission: ""
+      muted: false
+      slowmode-seconds: 3
+      discord-log: true
+      format: "<dark_gray>[<gold><channel></gold>]</dark_gray> <prefix><white><name></white><suffix><gray>: </gray><message>"
+    staff:
+      enabled: true
+      display: Staff
+      radius: -1
+      permission: smp.staff.chat
+      muted: false
+      slowmode-seconds: 0
+      discord-log: true
   filters:
     enabled: true
     repeat-window-seconds: 8
@@ -68,8 +227,7 @@ chat-games:
   enabled: true
   interval-minutes: 15
   answer-time-seconds: 60
-  reward-commands:
-    - "give %player% diamond 1"
+  reward-commands: ["give %player% diamond 1"]
 
 gameplay:
   combat-tag:
@@ -88,11 +246,9 @@ gameplay:
   streaks:
     anti-farm-minutes: 5
     reward-every: 5
-    reward-commands:
-      - "give %player% golden_apple 1"
+    reward-commands: ["give %player% golden_apple 1"]
     extra-every: 10
-    extra-commands:
-      - "give %player% golden_apple 1"
+    extra-commands: ["give %player% golden_apple 1"]
   head-drops:
     enabled: true
   supply-drops:
@@ -125,7 +281,232 @@ announcements:
   messages:
     - "<gray>Use <yellow>/rules</yellow> to read the server rules.</gray>"
     - "<gray>Use <yellow>/discord</yellow> for the community Discord.</gray>"
-    - "<gray>The Locator Bar is enabled daily from 17:30 to 18:30 Europe/Dublin.</gray>"
+
+events:
+  definitions:
+    doublexp:
+      enabled: true
+      display: Double XP
+      default-duration: 30m
+      xp-multiplier: 2.0
+      locator: false
+      chat-games-interval-seconds: 0
+      start-message: "<gold><bold>EVENT:</bold></gold> <yellow>%display%</yellow> <gray>started for %duration%.</gray>"
+      end-message: "<gray>The <yellow>%display%</yellow> event has ended.</gray>"
+      start-commands: []
+      end-commands: []
+    locator:
+      enabled: true
+      display: Locator Event
+      default-duration: 30m
+      xp-multiplier: 1.0
+      locator: true
+      chat-games-interval-seconds: 0
+      start-commands: []
+      end-commands: []
+    chatgames:
+      enabled: true
+      display: Chat Games Marathon
+      default-duration: 30m
+      xp-multiplier: 1.0
+      locator: false
+      chat-games-interval-seconds: 120
+      start-commands: []
+      end-commands: []
+
+platform:
+  localization:
+    per-player: false
+
+  guis:
+    admin:
+      title: "<dark_aqua>SMPToolkit Control Panel</dark_aqua>"
+    reports:
+      title: "<dark_red>Reports</dark_red>"
+      material: PAPER
+    warnings:
+      title: "<gold>Warnings: %player%</gold>"
+      material: WRITABLE_BOOK
+    notes:
+      title: "<gold>Notes: %player%</gold>"
+      material: BOOK
+    cases:
+      title: "<dark_red>Moderation Cases</dark_red>"
+
+  config-gui:
+    include-command-toggles: true
+    toggles:
+      - modules.staff
+      - modules.moderation
+      - modules.chat-control
+      - modules.chat-games
+      - modules.statistics
+      - modules.locator
+      - modules.player-utilities
+      - modules.gameplay
+      - modules.events
+      - modules.announcements
+      - modules.platform
+      - features.systems.progression
+      - features.systems.bounties
+      - features.systems.scheduler
+      - features.systems.world-profiles
+      - features.systems.staff-activity
+      - features.systems.seasons
+      - features.systems.pvp-expansion
+      - features.systems.onboarding
+      - features.systems.web-api
+
+  moderation:
+    templates:
+      spam:
+        type: MUTE
+        duration: 30m
+        reason: Spam
+        silent: false
+      griefing:
+        type: BAN
+        duration: 1d
+        reason: Griefing
+        silent: false
+      warning:
+        type: WARN
+        duration: ""
+        reason: Staff warning
+        silent: false
+    warning-escalation:
+      "3": "tempmute %player% 30m Automatic escalation after 3 active warnings"
+      "5": "tempban %player% 1d Automatic escalation after 5 active warnings"
+
+  progression:
+    timezone: Europe/Dublin
+    quests:
+      daily-kills:
+        enabled: true
+        display: Get 3 player kills
+        counter: player_kills
+        target: 3
+        period: DAILY
+        reward-commands: ["give %player% golden_apple 1"]
+      weekly-mining:
+        enabled: true
+        display: Break 500 blocks
+        counter: blocks_broken
+        target: 500
+        period: WEEKLY
+        reward-commands: ["give %player% diamond 2"]
+      daily-play:
+        enabled: true
+        display: Play for 30 minutes
+        counter: play_minutes
+        target: 30
+        period: DAILY
+        reward-commands: []
+    achievements:
+      first-blood:
+        enabled: true
+        display: First Blood
+        counter: player_kills
+        target: 1
+        reward-commands: []
+      hunter:
+        enabled: true
+        display: Hunter
+        counter: mob_kills
+        target: 100
+        reward-commands: []
+      angler:
+        enabled: true
+        display: Angler
+        counter: fish_caught
+        target: 50
+        reward-commands: []
+
+  bounties:
+    allow-enchanted-items: false
+
+  scheduler:
+    timezone: Europe/Dublin
+    jobs:
+      reminder:
+        enabled: false
+        cron: "0 */2 * * *"
+        every: ""
+        broadcast: "<gray>Remember to read <yellow>/rules</yellow>.</gray>"
+        commands: []
+      nightly-save:
+        enabled: false
+        cron: "0 4 * * *"
+        every: ""
+        broadcast: ""
+        commands: ["save-all"]
+
+  world-profiles:
+    default:
+      pvp: true
+      combat-tag: true
+      new-player-protection: true
+      tpa: true
+      homes: true
+      rtp: true
+      back: true
+      spawn: true
+    worlds:
+      world:
+        locator-bar: false
+      world_nether:
+        locator-bar: false
+      world_the_end:
+        locator-bar: false
+
+  staff-activity:
+    redact-commands: ["login", "register", "changepassword", "2fa"]
+
+  pvp:
+    custom-killfeed: true
+    killfeed-format: "<red>%victim%</red> <gray>was killed by</gray> <green>%killer%</green> <dark_gray>[%weapon% • %distance%m%assists%%revenge%]</dark_gray>"
+    assist-window-seconds: 15
+    assist-min-damage: 2.0
+    assist-reward-commands: []
+
+  onboarding:
+    delay-ticks: 40
+    require-rules-accept: false
+    gui-enabled: true
+    allowed-before-accept: ["rules", "rulesaccept", "msg", "reply", "r"]
+    messages:
+      - "<gray>Use <yellow>/help</yellow> to see SMP commands.</gray>"
+      - "<gray>Use <yellow>/quests</yellow> to view current challenges.</gray>"
+    starter-commands: []
+
+  web-api:
+    enabled: false
+    bind: 127.0.0.1
+    port: 8765
+    require-token: true
+    token: ""
+    expose-online-names: false
+
+  permission-presets:
+    helper:
+      create-group: true
+      parent: ""
+      permissions:
+        - smp.staff.chat
+        - smp.moderation.reports
+        - smp.moderation.warnings
+        - smp.moderation.notes
+    moderator:
+      create-group: true
+      parent: helper
+      permissions:
+        - smp.staff.*
+        - smp.moderation.*
+    admin:
+      create-group: true
+      parent: moderator
+      permissions:
+        - smp.admin
 
 server-info:
   discord: "discord.gg/example"

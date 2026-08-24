@@ -1,5 +1,5 @@
 name: SMPToolkit
-version: 0.1
+version: 0.2
 main: io.github.xtx.smptoolkit.SMPToolkitPlugin
 author: XTX
 api-version: '26.2'
@@ -10,6 +10,13 @@ libraries:
 
 commands:
   smp: {description: SMPToolkit administration, permission: smp.admin}
+  smpgui: {description: Open the SMPToolkit control panel, permission: smp.admin}
+  configgui: {description: Open the configuration GUI, permission: smp.admin}
+  profilegui: {description: Open a staff player profile, permission: smp.staff.playerinfo}
+  smpapi: {description: Show SMPToolkit API status, permission: smp.admin}
+  help: {description: Show SMP server help}
+  smphelp: {description: Show SMPToolkit help}
+
   staff: {description: Toggle staff mode, permission: smp.staff}
   staffchat: {description: Toggle/send staff chat, aliases: [sc], permission: smp.staff.chat}
   staffgui: {description: Open staff GUI for a player, permission: smp.staff.gui}
@@ -28,8 +35,11 @@ commands:
   playerinfo: {description: Inspect player information, aliases: [pinfo], permission: smp.staff.playerinfo}
   maintenance: {description: Toggle maintenance mode, permission: smp.staff.maintenance}
   restart: {description: Schedule/cancel restart, permission: smp.staff.restart}
+  staffstats: {description: View staff activity statistics, permission: smp.staff.stats}
+
   kick: {description: Kick a player, permission: smp.moderation.kick}
   warn: {description: Warn a player, permission: smp.moderation.warn}
+  removewarn: {description: Remove a warning by ID, permission: smp.moderation.warn}
   warnings: {description: View warnings, permission: smp.moderation.warnings}
   mute: {description: Mute a player, permission: smp.moderation.mute}
   tempmute: {description: Temporarily mute a player, permission: smp.moderation.mute}
@@ -37,23 +47,41 @@ commands:
   ban: {description: Ban a player, permission: smp.moderation.ban}
   tempban: {description: Temporarily ban a player, permission: smp.moderation.ban}
   unban: {description: Unban a player, permission: smp.moderation.ban}
+  pardon: {description: Pardon a punishment by ID, permission: smp.moderation.pardon}
+  punish: {description: Apply a punishment template, permission: smp.moderation.punish}
   history: {description: View punishment history, permission: smp.moderation.history}
   note: {description: Manage staff notes, permission: smp.moderation.notes}
+  notes: {description: Open staff notes GUI, permission: smp.moderation.notes}
   report: {description: Report a player}
   reports: {description: Manage reports, permission: smp.moderation.reports}
   altcheck: {description: Check likely alternate accounts, aliases: [alts], permission: smp.staff.altcheck}
+  case: {description: Manage a moderation case, permission: smp.moderation.cases}
+  cases: {description: Open moderation cases, permission: smp.moderation.cases}
+  rollback: {description: Roll back supported admin actions, permission: smp.admin.rollback}
+
   chat: {description: Chat administration, permission: smp.chat.admin}
   channel: {description: Select chat channel}
+  chatspy: {description: Toggle chat spy, permission: smp.staff.chatspy}
+  socialspy: {description: Toggle private-message spy, permission: smp.staff.socialspy}
   ignore: {description: Ignore a player}
   msg: {description: Private message, aliases: [tell, whisper, w]}
   reply: {description: Reply to last private message, aliases: [r]}
   chatgames: {description: Chat game control and stats}
+
   stats: {description: View player statistics}
   topkills: {description: Kill leaderboard}
   topdeaths: {description: Death leaderboard}
   topkd: {description: K/D leaderboard}
   topplaytime: {description: Playtime leaderboard}
+  pvpstats: {description: View expanded PvP statistics}
+  season: {description: Season status, leaderboards and administration}
+  quests: {description: View active challenges}
+  quest: {description: Manage your challenge progress}
+  achievements: {description: View achievements}
+  bounty: {description: Create or manage item bounties}
+  bounties: {description: View active item bounties}
   locator: {description: Locator Bar status/control}
+
   tpa: {description: Request teleport}
   tpaccept: {description: Accept teleport request}
   tpdeny: {description: Deny teleport request}
@@ -69,6 +97,7 @@ commands:
   realname: {description: Resolve display name to account name}
   afk: {description: Toggle AFK}
   rtp: {description: Random teleport}
+
   voteskipnight: {description: Vote to skip night}
   streak: {description: View PvP kill streak}
   profile: {description: View SMP profile}
@@ -77,23 +106,35 @@ commands:
   signup: {description: Sign up for server events}
   event: {description: Server event status/control}
   announce: {description: Broadcast an announcement, permission: smp.announcements.admin}
+  scheduler: {description: Manage scheduled server jobs, permission: smp.scheduler.admin}
+  worldprofile: {description: View world gameplay profile}
+  webapi: {description: Manage the read-only web API, permission: smp.admin.webapi}
+  smpermissions: {description: Apply LuckPerms permission presets, permission: smp.admin.permissions}
+  onboarding: {description: Manage player onboarding, permission: smp.admin.onboarding}
+  rulesaccept: {description: Accept server rules}
   discord: {description: Show Discord information}
   rules: {description: Show server rules}
-  smphelp: {description: Show SMPToolkit help}
-  help: {description: Show SMP server help}
 
 permissions:
   smp.admin:
     default: op
     children:
       smp.admin.setspawn: true
+      smp.admin.rollback: true
+      smp.admin.webapi: true
+      smp.admin.permissions: true
+      smp.admin.onboarding: true
       smp.staff.*: true
       smp.moderation.*: true
       smp.chat.admin: true
       smp.events.admin: true
+      smp.scheduler.admin: true
+      smp.seasons.admin: true
+      smp.bounties.admin: true
       smp.announcements.admin: true
       smp.gameplay.protection.bypass: true
       smp.gameplay.combat.bypass: true
+
   smp.staff.*:
     default: op
     children:
@@ -115,6 +156,10 @@ permissions:
       smp.staff.restart: true
       smp.staff.altcheck: true
       smp.staff.commandlog: true
+      smp.staff.chatspy: true
+      smp.staff.socialspy: true
+      smp.staff.stats: true
+
   smp.moderation.*:
     default: op
     children:
@@ -123,9 +168,13 @@ permissions:
       smp.moderation.warnings: true
       smp.moderation.mute: true
       smp.moderation.ban: true
+      smp.moderation.pardon: true
+      smp.moderation.punish: true
       smp.moderation.history: true
       smp.moderation.notes: true
       smp.moderation.reports: true
+      smp.moderation.cases: true
+
   smp.maintenance.bypass: {default: op}
   smp.freeze.bypass: {default: op}
   smp.chat.admin: {default: op}
@@ -137,7 +186,9 @@ permissions:
   smp.homes.5: {default: false}
   smp.homes.unlimited: {default: op}
   smp.events.admin: {default: op}
+  smp.scheduler.admin: {default: op}
+  smp.seasons.admin: {default: op}
+  smp.bounties.admin: {default: op}
   smp.announcements.admin: {default: op}
-
   smp.gameplay.protection.bypass: {default: op}
   smp.gameplay.combat.bypass: {default: op}

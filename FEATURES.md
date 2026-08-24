@@ -1,13 +1,131 @@
-# SMPToolkit 0.1 Features
+# SMPToolkit 0.2
 
-- **Staff:** staff mode, vanish, freeze, inspection tools, teleport tools, maintenance and restart controls.
-- **Moderation:** warnings, mutes, bans, punishment history, staff notes, reports and alt correlation.
-- **Chat:** LuckPerms formatting, channels, slow/mute/clear controls, private messaging and Discord chat logging.
-- **Chat Games:** reaction, maths, trivia, unscramble and other scheduled games with rewards and leaderboards.
-- **Statistics:** kills, deaths, K/D, playtime and chat-game wins.
-- **Player Utilities:** TPA, homes, spawn, back, RTP, AFK, seen, messaging and ignore.
-- **Gameplay:** vote-skip-night, streaks, heads, coinflip, supply drops, Manhunt, combat tags and new-player protection.
-- **Locator & Events:** scheduled Locator Bar windows, server events and announcements.
-- **Integrations:** LuckPerms, PlaceholderAPI and separate Discord webhooks for admin commands and Minecraft chat.
+## Features
 
-The plugin is internally modular so features can later be split into standalone plugins.
+- Staff
+- Moderation
+- Moderation Cases
+- Chat
+- Chat Games
+- Statistics
+- Player Utilities
+- Gameplay
+- Events
+- Quests & Achievements
+- Bounties
+- Seasons
+- Scheduling
+- World Profiles
+- Onboarding
+- PvP Statistics
+- Administration GUIs
+- Configuration GUI
+- Rollback
+- Staff Activity
+- Localization
+- Web API
+- LuckPerms & PlaceholderAPI Integrations
+- Developer API
+- Discord Logging
+
+## Commands
+
+`/smp`
+`/smpgui`
+`/configgui`
+`/profilegui`
+`/smpapi`
+`/help`
+`/smphelp`
+`/staff`
+`/staffchat`
+`/staffgui`
+`/freeze`
+`/unfreeze`
+`/vanish`
+`/invsee`
+`/endersee`
+`/heal`
+`/feed`
+`/fly`
+`/god`
+`/speed`
+`/tpo`
+`/tpohere`
+`/playerinfo`
+`/maintenance`
+`/restart`
+`/staffstats`
+`/kick`
+`/warn`
+`/removewarn`
+`/warnings`
+`/mute`
+`/tempmute`
+`/unmute`
+`/ban`
+`/tempban`
+`/unban`
+`/pardon`
+`/punish`
+`/history`
+`/note`
+`/notes`
+`/report`
+`/reports`
+`/altcheck`
+`/case`
+`/cases`
+`/rollback`
+`/chat`
+`/channel`
+`/chatspy`
+`/socialspy`
+`/ignore`
+`/msg`
+`/reply`
+`/chatgames`
+`/stats`
+`/topkills`
+`/topdeaths`
+`/topkd`
+`/topplaytime`
+`/pvpstats`
+`/season`
+`/quests`
+`/quest`
+`/achievements`
+`/bounty`
+`/bounties`
+`/locator`
+`/tpa`
+`/tpaccept`
+`/tpdeny`
+`/tptoggle`
+`/sethome`
+`/home`
+`/delhome`
+`/homes`
+`/setspawn`
+`/spawn`
+`/back`
+`/seen`
+`/realname`
+`/afk`
+`/rtp`
+`/voteskipnight`
+`/streak`
+`/profile`
+`/coinflip`
+`/manhunt`
+`/signup`
+`/event`
+`/announce`
+`/scheduler`
+`/worldprofile`
+`/webapi`
+`/smpermissions`
+`/onboarding`
+`/rulesaccept`
+`/discord`
+`/rules`

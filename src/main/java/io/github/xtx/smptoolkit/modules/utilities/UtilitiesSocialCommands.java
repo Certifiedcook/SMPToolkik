@@ -20,11 +20,13 @@ class UtilitiesSocialCommands extends UtilitiesTravelCommands {
         Player target = Bukkit.getPlayerExact(args[0]);
         if (target == null) { p.sendMessage(Text.mm("<red>Player not found.</red>")); return true; }
         if (isIgnoring(target.getUniqueId(), p.getUniqueId())) { p.sendMessage(Text.mm("<red>That player is ignoring you.</red>")); return true; }
-        String message = Text.escapeMini(Text.join(args,1));
+        String raw = Text.join(args,1);
+        String message = Text.escapeMini(raw);
         p.sendMessage(Text.mm("<gray>[You → " + Text.escapeMini(target.getName()) + "]</gray> <white>" + message + "</white>"));
         target.sendMessage(Text.mm("<gray>[" + Text.escapeMini(p.getName()) + " → You]</gray> <white>" + message + "</white>"));
         if (plugin.getConfig().getBoolean("discord.minecraft-chat-log.include-private-messages", true))
-            plugin.discord().sendMinecraftChat(p.getName(), "PRIVATE → " + target.getName(), Text.join(args,1));
+            plugin.discord().sendMinecraftChat(p.getName(), "PRIVATE → " + target.getName(), raw);
+        if (plugin.chat() != null) plugin.chat().spyPrivateMessage(p,target,raw);
         lastMessagePartner.put(p.getUniqueId(), target.getUniqueId());
         lastMessagePartner.put(target.getUniqueId(), p.getUniqueId());
         return true;
