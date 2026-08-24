@@ -5,6 +5,7 @@ on:
   pull_request:
   workflow_dispatch:
 
+# CI validation for the current source tree.
 jobs:
   build:
     runs-on: ubuntu-latest
