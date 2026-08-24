@@ -1,0 +1,143 @@
+name: SMPToolkit
+version: 0.1
+main: io.github.xtx.smptoolkit.SMPToolkitPlugin
+author: XTX
+api-version: '26.2'
+description: Modular all-in-one SMP administration, chat, gameplay and utility plugin.
+softdepend: [LuckPerms, PlaceholderAPI]
+libraries:
+  - org.xerial:sqlite-jdbc:3.53.2.1
+
+commands:
+  smp: {description: SMPToolkit administration, permission: smp.admin}
+  staff: {description: Toggle staff mode, permission: smp.staff}
+  staffchat: {description: Toggle/send staff chat, aliases: [sc], permission: smp.staff.chat}
+  staffgui: {description: Open staff GUI for a player, permission: smp.staff.gui}
+  freeze: {description: Freeze a player, permission: smp.staff.freeze}
+  unfreeze: {description: Unfreeze a player, permission: smp.staff.freeze}
+  vanish: {description: Toggle vanish, aliases: [v], permission: smp.staff.vanish}
+  invsee: {description: Inspect inventory, permission: smp.staff.invsee}
+  endersee: {description: Inspect ender chest, aliases: [ecsee], permission: smp.staff.endersee}
+  heal: {description: Heal a player, permission: smp.staff.heal}
+  feed: {description: Feed a player, permission: smp.staff.feed}
+  fly: {description: Toggle flight, permission: smp.staff.fly}
+  god: {description: Toggle god mode, permission: smp.staff.god}
+  speed: {description: Set walk/fly speed, permission: smp.staff.speed}
+  tpo: {description: Staff teleport to player, permission: smp.staff.teleport}
+  tpohere: {description: Staff teleport player here, permission: smp.staff.teleport}
+  playerinfo: {description: Inspect player information, aliases: [pinfo], permission: smp.staff.playerinfo}
+  maintenance: {description: Toggle maintenance mode, permission: smp.staff.maintenance}
+  restart: {description: Schedule/cancel restart, permission: smp.staff.restart}
+  kick: {description: Kick a player, permission: smp.moderation.kick}
+  warn: {description: Warn a player, permission: smp.moderation.warn}
+  warnings: {description: View warnings, permission: smp.moderation.warnings}
+  mute: {description: Mute a player, permission: smp.moderation.mute}
+  tempmute: {description: Temporarily mute a player, permission: smp.moderation.mute}
+  unmute: {description: Unmute a player, permission: smp.moderation.mute}
+  ban: {description: Ban a player, permission: smp.moderation.ban}
+  tempban: {description: Temporarily ban a player, permission: smp.moderation.ban}
+  unban: {description: Unban a player, permission: smp.moderation.ban}
+  history: {description: View punishment history, permission: smp.moderation.history}
+  note: {description: Manage staff notes, permission: smp.moderation.notes}
+  report: {description: Report a player}
+  reports: {description: Manage reports, permission: smp.moderation.reports}
+  altcheck: {description: Check likely alternate accounts, aliases: [alts], permission: smp.staff.altcheck}
+  chat: {description: Chat administration, permission: smp.chat.admin}
+  channel: {description: Select chat channel}
+  ignore: {description: Ignore a player}
+  msg: {description: Private message, aliases: [tell, whisper, w]}
+  reply: {description: Reply to last private message, aliases: [r]}
+  chatgames: {description: Chat game control and stats}
+  stats: {description: View player statistics}
+  topkills: {description: Kill leaderboard}
+  topdeaths: {description: Death leaderboard}
+  topkd: {description: K/D leaderboard}
+  topplaytime: {description: Playtime leaderboard}
+  locator: {description: Locator Bar status/control}
+  tpa: {description: Request teleport}
+  tpaccept: {description: Accept teleport request}
+  tpdeny: {description: Deny teleport request}
+  tptoggle: {description: Toggle teleport requests}
+  sethome: {description: Set a home}
+  home: {description: Teleport home}
+  delhome: {description: Delete a home}
+  homes: {description: List homes}
+  setspawn: {description: Set server spawn, permission: smp.admin.setspawn}
+  spawn: {description: Teleport to spawn}
+  back: {description: Return to previous/death location}
+  seen: {description: Show last seen information}
+  realname: {description: Resolve display name to account name}
+  afk: {description: Toggle AFK}
+  rtp: {description: Random teleport}
+  voteskipnight: {description: Vote to skip night}
+  streak: {description: View PvP kill streak}
+  profile: {description: View SMP profile}
+  coinflip: {description: Wager one held item in a coinflip}
+  manhunt: {description: Manhunt control}
+  signup: {description: Sign up for server events}
+  event: {description: Server event status/control}
+  announce: {description: Broadcast an announcement, permission: smp.announcements.admin}
+  discord: {description: Show Discord information}
+  rules: {description: Show server rules}
+  smphelp: {description: Show SMPToolkit help}
+  help: {description: Show SMP server help}
+
+permissions:
+  smp.admin:
+    default: op
+    children:
+      smp.admin.setspawn: true
+      smp.staff.*: true
+      smp.moderation.*: true
+      smp.chat.admin: true
+      smp.events.admin: true
+      smp.announcements.admin: true
+      smp.gameplay.protection.bypass: true
+      smp.gameplay.combat.bypass: true
+  smp.staff.*:
+    default: op
+    children:
+      smp.staff: true
+      smp.staff.chat: true
+      smp.staff.gui: true
+      smp.staff.freeze: true
+      smp.staff.vanish: true
+      smp.staff.invsee: true
+      smp.staff.endersee: true
+      smp.staff.heal: true
+      smp.staff.feed: true
+      smp.staff.fly: true
+      smp.staff.god: true
+      smp.staff.speed: true
+      smp.staff.teleport: true
+      smp.staff.playerinfo: true
+      smp.staff.maintenance: true
+      smp.staff.restart: true
+      smp.staff.altcheck: true
+      smp.staff.commandlog: true
+  smp.moderation.*:
+    default: op
+    children:
+      smp.moderation.kick: true
+      smp.moderation.warn: true
+      smp.moderation.warnings: true
+      smp.moderation.mute: true
+      smp.moderation.ban: true
+      smp.moderation.history: true
+      smp.moderation.notes: true
+      smp.moderation.reports: true
+  smp.maintenance.bypass: {default: op}
+  smp.freeze.bypass: {default: op}
+  smp.chat.admin: {default: op}
+  smp.chat.slow.bypass: {default: op}
+  smp.chat.links: {default: op}
+  smp.chat.color: {default: op}
+  smp.homes.1: {default: true}
+  smp.homes.3: {default: false}
+  smp.homes.5: {default: false}
+  smp.homes.unlimited: {default: op}
+  smp.events.admin: {default: op}
+  smp.announcements.admin: {default: op}
+
+  smp.gameplay.protection.bypass: {default: op}
+  smp.gameplay.combat.bypass: {default: op}

@@ -1,0 +1,142 @@
+modules:
+  staff: true
+  moderation: true
+  altcheck: true
+  chat-control: true
+  chat-games: true
+  statistics: true
+  locator: true
+  player-utilities: true
+  gameplay: true
+  events: true
+  announcements: true
+  integrations: true
+
+database:
+  file: data.db
+
+discord:
+  admin-command-log:
+    enabled: false
+    webhook-url: ""
+    log-console: true
+    log-op-players: true
+    permission: smp.staff.commandlog
+    redact-prefixes:
+      - "/login"
+      - "/register"
+      - "/changepassword"
+      - "/2fa"
+  minecraft-chat-log:
+    enabled: false
+    webhook-url: ""
+    include-channel: true
+    include-staff-chat: true
+    include-private-messages: true
+
+staff:
+  maintenance:
+    enabled: false
+    kick-message: "<red>Server maintenance is enabled.</red>"
+  restart:
+    default-seconds: 60
+    announce-at: [60, 30, 10, 5, 4, 3, 2, 1]
+  freeze:
+    block-all-commands: true
+    block-teleports: true
+    allowed-commands: ["msg", "reply", "r"]
+    disconnect-alert: true
+  vanish:
+    hide-join-leave: true
+
+chat:
+  format: "<dark_gray>[<channel>]</dark_gray> <prefix><white><name></white><suffix><gray>: </gray><message>"
+  local-radius: 100
+  default-channel: GLOBAL
+  slowmode-seconds: 0
+  globally-muted: false
+  filters:
+    enabled: true
+    repeat-window-seconds: 8
+    caps-enabled: true
+    caps-min-length: 10
+    caps-max-percent: 75
+    links-enabled: true
+    link-whitelist: []
+
+chat-games:
+  enabled: true
+  interval-minutes: 15
+  answer-time-seconds: 60
+  reward-commands:
+    - "give %player% diamond 1"
+
+gameplay:
+  combat-tag:
+    seconds: 15
+    logout-kill: true
+    blocked-commands: ["spawn", "home", "tpa", "tpaccept", "back", "rtp"]
+  new-player-protection:
+    playtime-minutes: 30
+  rtp:
+    world: world
+    min-radius: 250
+    max-radius: 5000
+    warmup-seconds: 5
+  vote-skip-night:
+    required-percent: 50
+  streaks:
+    anti-farm-minutes: 5
+    reward-every: 5
+    reward-commands:
+      - "give %player% golden_apple 1"
+    extra-every: 10
+    extra-commands:
+      - "give %player% golden_apple 1"
+  head-drops:
+    enabled: true
+  supply-drops:
+    enabled: true
+    interval-hours: 4
+    radius: 500
+    loot:
+      DIAMOND: 3
+      GOLDEN_APPLE: 4
+      EXPERIENCE_BOTTLE: 32
+  manhunt:
+    compass-update-seconds: 5
+
+locator:
+  timezone: Europe/Dublin
+  start: "17:30"
+  end: "18:30"
+  worlds: [world]
+  announce-toggle: true
+
+utilities:
+  tpa-expiry-seconds: 60
+  teleport-warmup-seconds: 5
+  homes-default-limit: 1
+  spawn-on-first-join: false
+
+announcements:
+  interval-minutes: 10
+  random-order: true
+  messages:
+    - "<gray>Use <yellow>/rules</yellow> to read the server rules.</gray>"
+    - "<gray>Use <yellow>/discord</yellow> for the community Discord.</gray>"
+    - "<gray>The Locator Bar is enabled daily from 17:30 to 18:30 Europe/Dublin.</gray>"
+
+server-info:
+  discord: "discord.gg/example"
+  rules:
+    - "No griefing outside the server's allowed PvP rules."
+    - "Do not use cheats or exploits."
+    - "Follow staff instructions during moderation checks."
+
+privacy:
+  ip-hash-salt: ""
+  alt-history-retention-days: 90
+
+presence:
+  custom-messages: true
