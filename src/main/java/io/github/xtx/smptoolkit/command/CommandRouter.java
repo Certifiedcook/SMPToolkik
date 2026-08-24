@@ -37,10 +37,6 @@ public final class CommandRouter implements CommandExecutor, TabCompleter, Liste
         Bukkit.getPluginManager().registerEvents(this,plugin);
     }
 
-    /**
-     * Bukkit already owns /help, so plugin.yml alone cannot be relied on to replace it.
-     * Intercept the plain player /help command so the result is deterministic.
-     */
     @EventHandler(priority = EventPriority.LOWEST)
     public void onHelpCommand(PlayerCommandPreprocessEvent event){
         String message=event.getMessage().trim();
