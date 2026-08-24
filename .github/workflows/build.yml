@@ -15,8 +15,8 @@ jobs:
           distribution: temurin
           java-version: '25'
           cache: maven
-      - name: Build
-        run: mvn -B clean package
+      - name: Verify
+        run: mvn -B clean verify
       - uses: actions/upload-artifact@v4
         with:
           name: SMPToolkit
